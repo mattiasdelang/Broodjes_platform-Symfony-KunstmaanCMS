@@ -1,0 +1,45 @@
+# This file is auto-generated during the composer install
+parameters:
+    database_driver: pdo_mysql
+    database_host: 127.0.0.1
+    database_port: null
+    database_name: broodjesplatform
+    database_user: broodjesplatform
+    database_password: ieFeequ7
+    mailer_transport: smtp
+    mailer_host: '0.0.0.0:1025'
+    mailer_user: null
+    mailer_password: null
+    locale: en
+    secret: ThisTokenIsNotSoSecretChangeIt
+    debug_toolbar: true
+    debug_redirects: false
+    use_assetic_controller: true
+    requiredlocales: nl|fr|de|en
+    defaultlocale: en
+    multilanguage: true
+    sentry.dsn: 'https://XXXXXXXX:XXXXXXXX@app.getsentry.com/XXXX'
+    cdnpath: null
+    websitetitle: broodjesplatform
+    session_prefix: myproject
+    searchport: 9200
+    searchindexname: myproject
+    searchindexprefix: myproject
+    analytics.googletagmanager: GTM-XXXXXX
+    aviary_api_key: 'Register on https://creativesdk.adobe.com/myapps.html'
+    google.api.client_id: 231681651431-4kvrqs8pj9278e3gqjdo0l3ipf4vqd7b.apps.googleusercontent.com
+    google.api.client_secret: V7jVHe3TIBljAq6GWgOpPSju
+    google.api.dev_key: AIzaSyAojAncj0E3qSVBa3tG7aOm4M1gpPkG95k
+    doctrine.server_version: 5.6
+    slack.webhook.token: T024ZT2L3/B37038YMQ/OyIHjLGu0DT5e9UvjpwhWVb2
+    slack.api.token: xoxp-2169920683-81093907540-108941955987-47e5b50339826b57fe8643c4356e6228
+    slack.api.client.id: "2169920683.109715633030"
+    slack.api.client.secret: c38583eb4a2bd5d56ba599a91d986619
+    slack.api.request.list.token: 8SruODEvRZPeNlGlHCV1NAej
+    slack.api.request.balance.token: HX7PB0leHZgDvXRhgJreCuE2
+    slack.api.request.order.token: HoUtuutha9UpnIM37zNfMmXj
+    slack.api.request.toggle.token: JWsr3XV4cruycqyMNZwisf47
+    slack.api.request.default.token: LqpD3zmk0bRmamEPSMloyfa1
+    slack.api.request.show.default.token: us8ZosPDiFEYn3BnQ7iL7MNI
+    slack.api.request.payment.token: WUjrmVDKlMXemOEjh2GZTAwQ
+    mollie.api.key.test: test_w4NQh4tnqxUQFQskB85UrdcN5g2mgM

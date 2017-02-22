@@ -1,0 +1,241 @@
+
+{% block content %}
+    <section class="col-md-7" style="float:left;">
+        <h3>Current Order</h3>
+        <table class="table table-striped table-bordered">
+            <thead>
+            <tr>
+                <th>
+                    Name
+                </th>
+                <th>
+                    Price
+                </th>
+                <th>
+                    Remove
+                </th>
+            </tr>
+            </thead>
+            <tbody>
+            {% if order is not empty %}
+                {% for orderProduct in order[0].endProducts %}
+                    <tr>
+                        <td>{{ orderProduct.name }}</td>
+                        <td>{{ orderProduct.price }}</td>
+                        <td>
+                            <a href="{{ path('kuma_broodjes_remove_order', {'orderId': order[0].id, 'endProdId': orderProduct.id}) }}"
+                               class="link--text table__actions__item"
+                               title="Edit">
+                                <i class="fa fa-times" aria-hidden="true"></i>
+                            </a>
+                        </td>
+                    </tr>
+                {% endfor %}
+            {% endif %}
+            </tbody>
+        </table>
+
+        <br>
+
+        <h3>Default Product
+        </h3>
+        <table class="table table-striped table-bordered">
+            <thead>
+            <tr>
+                <th>
+                    Day
+                </th>
+                <th>
+                    Name
+                </th>
+                <th>
+                    Price
+                </th>
+                <th>
+                    On/Off
+                </th>
+            </tr>
+            </thead>
+            <tbody>
+                {% for day in weekDays %}
+                    <tr>
+                        <td>{{ day|date('l') }}</td>
+                        <td>
+                            {% set selected = '' %}
+                            {% set toggle = '' %}
+                            {% set id = '' %}
+                            {% set price = '0' %}
+                            {% for default in defaultOrders if default.day == day|date('w') %}
+                                {% if default.endProduct != null %}
+                                    {% set selected = default.endProduct.id %}
+                                    {% set price = default.endProduct.price %}
+                                {% endif %}
+                                {% set toggle = default.pause %}
+                                {% set id = default.id %}
+                            {% endfor %}
+
+                            <select name="endproduct" class="productselect form-control" data-day="{{ day|date('w') }}">
+                                <option value="0">Geen default</option>
+                            {% for product in endProducts %}
+                                <option value="{{ product.id }}"{% if selected == product.id %} selected="selected"{% endif %}>{{ product.name }}</option>
+                            {% endfor %}
+                            </select>
+                        </td>
+                        <td>
+                            <p id="day{{ day|date('w') }}">{{ price }}</p>
+                        </td>
+                        <td>
+                            <a href="{{ path('kuma_broodjes_toggle_default_day', {'defaultId': id}) }}" class="link--text table__actions__item">
+                                {% if toggle == 0 %}
+                                    <i class="fa fa-pause" aria-hidden="true"></i>
+                                {% else %}
+                                    <i class="fa fa-play" aria-hidden="true"></i>
+                                {% endif %}
+                            </a>
+                        </td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+
+        <h3>Favorite Product</h3>
+        <table class="table table-striped table-bordered">
+            <thead>
+            <tr>
+                <th>
+                    Name
+                </th>
+                <th>
+                    Price
+                </th>
+                <th>
+                    Order
+                </th>
+            </tr>
+            </thead>
+            <tbody>
+            {% if favorites is not empty %}
+                {% for favorite in favorites %}
+                    <tr>
+                        <td>{{ favorite.name }}</td>
+                        <td>{{ favorite.price }}</td>
+                        <td>
+                            <a href="/en/admin/endproduct/{{ favorite.id }}/order"
+                               class="link--text table__actions__item"
+                               title="Order product">
+                                <i class="fa fa-shopping-cart"></i>
+                            </a>
+                        </td>
+                    </tr>
+                {% endfor %}
+            {% endif %}
+            </tbody>
+        </table>
+    </section>
+
+    <aside class="col-md-4" style="float:right;">
+        <div>
+            {% if userInfo.slackId is empty %}
+                <h3>Want to order with Slack?</h3>
+                <a href="https://slack.com/oauth/authorize?scope=identity.basic&client_id={{ clientId }}"><img src="https://api.slack.com/img/sign_in_with_slack.png" /></a>
+            {% endif %}
+        </div>
+        <div>
+            <h3>Credits: € {{ userInfo.Credits }}</h3>
+            <form action="{{ path("kuma_broodjes_credits_add") }}" method="post">
+                <div class="form-group form-inline">
+                    <div class="form-group">
+                        <label class="sr-only" for="exampleInputAmount">Amount (in Euro)</label>
+                        <div class="input-group">
+                            <div class="input-group-addon">€</div>
+                            <input type="text" class="form-control" name="amount" id="exampleInputAmount"
+                                   placeholder="Amount">
+                        </div>
+                    </div>
+                    {% if is_granted('ROLE_SUPER_ADMIN') %}
+                        <div class="form-group form-inline">
+                            <div class="input-group">
+                                <select class="form-control" name="user">
+                                    {% for user in users %}
+                                        <option value="{{ user.id }}">{{ user }}</option>
+                                    {% endfor %}
+                                </select>
+                            </div>
+                        </div>
+                    {% endif %}
+                </div>
+                <button type="submit" class="btn btn-primary" name="mollie">Add credits</button>
+                {% if is_granted('ROLE_SUPER_ADMIN') %}
+                    <button type="submit" class="btn btn-primary" name="cash">Add cash</button>
+                {% endif %}
+            </form>
+        </div>
+        <div>
+            <h3>Product of the day</h3>
+            <table class="table table-striped table-bordered">
+                <thead>
+                <tr>
+                    <th>
+                        Day
+                    </th>
+                    <th>
+                        Product
+                    </th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for dayItem in dayItems %}
+                    <tr>
+                        <td style="{{ dayItem.cssStyle }}">{{ dayItem.day }}</td>
+                        <td style="{{ dayItem.cssStyle }}">{{ dayItem.name }}</td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+            <button type="button" class="btn btn-primary btn-block"
+                    onclick="location.href='{{ path('kuma_broodjes_order_dayitem', {'type': 'broodje'}) }}';">Add dagbroodje
+            </button>
+            <button type="button" class="btn btn-primary btn-block"
+                    onclick="location.href='{{ path('kuma_broodjes_order_dayitem', {'type': 'soep'}) }}';">Add dagsoep
+            </button>
+        </div>
+        <div>
+            <h3>A week off? Pause auto ordering!</h3>
+            <a href="{{ path('kuma_broodjes_toggle_default', {'userId': userInfo.user.id}) }}" class="link--text table__actions__item">
+                {% if userInfo.DefaultToggle == 0 %}
+                    <button type="button" class="btn btn-primary btn-block">Pause ordering</button>
+                {% else %}
+                    <button type="button" class="btn btn-primary btn-block">Start ordering</button>
+                {% endif %}
+            </a>
+        </div>
+
+    </aside>
+{% endblock %}
+
+{% block extrajavascript %}
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+    <script type="application/javascript">
+        $( document ).ready(function() {
+
+            $(".productselect").change(function() {
+                $(this).css("border", "");
+                var day = $(this).data("day");
+                var product =  $(this).find('option:selected').val();
+                var data = {};
+                var element = this;
+                data["day"] = day;
+                data["product"] = product;
+                $.ajax({
+                    url : '{{ path('kuma_broodjes_set_default_day') }}',
+                    type: 'POST',
+                    data : data,
+                    success: function(data) {
+                        $("#day"+day).html(data.price);
+                        $(element).css('border','solid 1px green');
+                    }
+                });
+            });
+        });
+    </script>
+{% endblock %}

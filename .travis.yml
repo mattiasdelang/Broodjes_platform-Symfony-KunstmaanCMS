@@ -1,0 +1,96 @@
+language: php
+
+sudo: true
+
+addons:
+  apt:
+    packages:
+    - libxss1
+    - imagemagick
+    - ghostscript
+
+cache:
+  directories:
+    - $HOME/.composer/cache
+
+php:
+  - 5.5
+  - 5.6
+  - 7.0
+
+matrix:
+  fast_finish: true
+
+services:
+  - elasticsearch
+
+mysql:
+  database: kunstmaanbundles
+  username: travis
+  encoding: utf8
+
+env:
+  - DB="mysql"
+
+before_install:
+  - composer selfupdate
+
+install:
+  - sh -c 'if [ "$TRAVIS_PHP_VERSION" != "hhvm-nightly" ]; then echo "" >> ~/.phpenv/versions/$(phpenv version-name)/etc/conf.d/xdebug.ini; fi;'
+  - sh -c 'if [ "$TRAVIS_PHP_VERSION" != "hhvm-nightly" ] && [ $(php -r "echo PHP_MINOR_VERSION;") -le 4 ] && [ $(php -r "echo PHP_MAJOR_VERSION;") -le 5 ]; then echo "extension = apc.so" >> ~/.phpenv/versions/$(phpenv version-name)/etc/php.ini; fi;'
+  - sh -c 'if [ "$TRAVIS_PHP_VERSION" = "~ 5.[56]" ] ; then echo yes | pecl install apcu-4.0.10; fi;'
+  - sh -c 'if [ "$TRAVIS_PHP_VERSION" = "7.*" ] ; then pecl config-set preferred_state beta; echo yes | pecl install apcu; echo "extension = apcu.so" >> ~/.phpenv/versions/$(phpenv version-name)/etc/php.ini; fi;'
+  - sh -c 'if [ "$TRAVIS_PHP_VERSION" != "hhvm-nightly" ] && [ $(php -r "echo PHP_MAJOR_VERSION;") -le 5 ]; then echo "extension = memcached.so" >> ~/.phpenv/versions/$(phpenv version-name)/etc/php.ini; fi;'
+  - sh -c 'if [ "$TRAVIS_PHP_VERSION" != "hhvm-nightly" ] && [ $(php -r "echo PHP_MAJOR_VERSION;") -le 5 ]; then echo "extension = memcache.so" >> ~/.phpenv/versions/$(phpenv version-name)/etc/php.ini; fi;'
+  - sh -c 'if [ "$TRAVIS_PHP_VERSION" != "hhvm-nightly" ]; then echo "memory_limit = -1" >> ~/.phpenv/versions/$(phpenv version-name)/etc/conf.d/travis.ini; fi;'
+  - sh -c 'printf "\n" | pecl install imagick-3.4.0RC6'
+  - npm set progress=false
+  - gem install sass
+  - npm install bower
+  - npm install grunt
+  - npm install grunt-cli
+  - npm install uglify-js
+  - npm install uglifycss
+  - chmod -R 777 var/cache/ var/logs/
+
+
+before_script:
+  - sh -c "if [ '$DB' = 'mysql' ]; then mysql -e 'create database IF NOT EXISTS kunstmaanbundles;'; fi"
+  - cp app/config/parameters.yml.dist app/config/parameters.yml
+  - sh -c "if [ '$DB' = 'mysql' ]; then sed -i 's/dbuser/travis/g' app/config/parameters.yml; fi"
+  - composer install --no-scripts
+  - composer dump-autoload --optimize
+  - php vendor/sensio/distribution-bundle/Resources/bin/build_bootstrap.php
+  - bin/console --force --no-interaction doctrine:schema:drop --env=dev
+  - bin/console --no-interaction doctrine:schema:create --env=dev
+  - export DISPLAY=:99.0
+  - sh -e /etc/init.d/xvfb start
+  - sleep 3
+  - wget http://selenium-release.storage.googleapis.com/2.53/selenium-server-standalone-2.53.1.jar
+  - java -jar selenium-server-standalone-2.53.1.jar > /dev/null 2>&1 &
+  - sleep 5
+
+script:
+  - bin/console kuma:generate:bundle --namespace="MyProject\\WebsiteBundle" --no-interaction --dir=src
+  - bin/console kuma:generate:default-site --namespace="MyProject\\WebsiteBundle" --prefix="myproject_" --demosite --no-interaction
+  - bundle install
+  - npm install
+  - bower install
+  - gulp build || grunt build
+  - bin/console --force --no-interaction doctrine:schema:drop --env=dev
+  - bin/console --no-interaction doctrine:schema:create --env=dev
+  - bin/console --no-interaction doctrine:fixtures:load --env=dev
+  - bin/console kuma:generate:admin-tests --namespace="MyProject\\WebsiteBundle"
+  - sudo ln -s $(which sass) /usr/local/bin/sass
+  - bin/console --no-interaction assets:install --env=test
+  - bin/console --no-interaction assetic:dump --env=test
+  - bin/console --no-interaction cache:clear --env=test
+  - bin/console --no-interaction cache:warmup --env=test
+  - chmod -R 777 var/cache/ var/logs/
+  - bin/console server:start
+  - php -d memory_limit=2048M bin/behat --suite=default --verbose
+  - bin/console server:stop
+
+notifications:
+  email:
+    - travis@kunstmaan.be

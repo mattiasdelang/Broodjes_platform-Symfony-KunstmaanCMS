@@ -1,0 +1,4 @@
+server {
+    listen      @project.port@;
+    listen      [::]:@project.port@;
+    root        @project.dir@/data/current/web;

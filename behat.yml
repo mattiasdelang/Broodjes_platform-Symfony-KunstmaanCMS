@@ -1,0 +1,39 @@
+# hostname is probably 'localhost:8000' or '0.0.0.0:8000' when you run app/console server:run.
+
+# files_path is the directory where your assets are located that are used for the backend tests. The backend tests require this to be set.
+# This should be something like '/../../src/ProjectNamespace/YourCustomBundle/Features/Media/'
+
+# multilanguage is again used for the backend tests. The site can be set up either multi-language or single-language.
+# This variable has to match how your site is configured.
+# For example when you use multiple language it has to say 'multi'.
+# If your site is single-language it has to say 'single'.
+
+default:
+    extensions:
+        Behat\Symfony2Extension:
+#          mink_driver: true
+          kernel:
+            env: test
+            debug: true
+        Behat\MinkExtension:
+            base_url: 'http://localhost:8000/'
+            #javascript_session: sahi
+            browser_name: firefox
+            goutte: ~
+            selenium2: ~
+            files_path: '%paths.base%/src/MyProject/WebsiteBundle/Features/Media/'
+
+    suites:
+        default:
+            type: symfony_bundle
+            contexts:
+                - MyProject\WebsiteBundle\Features\Context\FeatureContext:
+                    parameters:
+                        language: multi
+                - MyProject\WebsiteBundle\Features\Context\GroupContext
+                - MyProject\WebsiteBundle\Features\Context\MediaContext
+                - MyProject\WebsiteBundle\Features\Context\PageContext
+                - MyProject\WebsiteBundle\Features\Context\PagePartContext
+                - MyProject\WebsiteBundle\Features\Context\RoleContext
+                - MyProject\WebsiteBundle\Features\Context\UserContext
+            bundle: 'MyProjectWebsiteBundle'

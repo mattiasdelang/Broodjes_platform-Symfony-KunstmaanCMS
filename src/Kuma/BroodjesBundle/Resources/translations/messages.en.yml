@@ -1,0 +1,48 @@
+flashbag:
+    notice:
+        favorite:
+            add: You have added %name% as favorite!
+            remove: You have removed %name% as favorite!
+        default:
+            remove: You have removed %name% as default!
+            toggle:
+                pause: You have stopped auto ordering your default product!
+                play: You have started auto ordering your default product!
+        order:
+            add: You have made a new order and added product %name%!
+            endproduct:
+                add: You have added a product %name%, in an existing order!
+                remove:
+                    success: You have removed the product, %name%, from the order!
+                    fail: You can not remove this product from the order!
+                soup: You have order the Dagsoep!
+                sandwich: You have order the Dagbroodje!
+                exist: This product does not exist!
+            error:
+                multiple: Multiple Orders, same User, same day, contact Ruud!
+                user: This is not your product!
+            money: You don't have enough credit to pay for this order!
+            duplication: This product is already in todays order!
+        endproduct:
+            error:
+                multiple: This product does already exist.
+            remove: You can not remove this product, this is in your current order!
+        credit:
+            increase: Your credits have been increased by %amount% Euro.
+            slack:
+                wait: Your payment is pending, you will get updates by slack message.
+        login:
+            slack:
+                success: You can now use the slack commands, they start with /broodje_!
+        defaultday:
+            pause: You have stopped the auto ordering for %day%.
+            play: You have started the auto ordering for %day%.
+    warning:
+        default:
+            add: You have added %name% as default!
+    username:
+        change: Please change your username, it still contains an email address!
+'End Product': Product
+'SaveOrder': Save & Order
+order:
+    processed: Order has been processed!

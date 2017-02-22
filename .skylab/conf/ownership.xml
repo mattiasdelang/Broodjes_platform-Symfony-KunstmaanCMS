@@ -1,0 +1,19 @@
+<?xml version="1.0"?>
+<config>
+  <var name="/" value="@config.superuser@.@project.group@"/>
+  <var name="/.ssh" value="-R @project.user@.@project.group@"/>
+  <var name="/stats" value="-R @project.user@.@project.group@"/>
+  <var name="/apachelogs" value="-R @project.user@.@project.group@"/>
+  <var name="/site" value="-R @project.user@.@project.group@"/>
+  <var name="/backup" value="-R @project.user@.@project.group@"/>
+  <var name="/data" value="-R @project.user@.@project.group@"/>
+  <var name="/conf" value="-R @config.superuser@.@project.group@"/>
+  <var name="/php-fpm" value="-R @project.user@.@project.group@"/>
+  <var name="/tmp" value="-R @project.user@.@project.group@"/>
+  <var name="/data/broodjesplatform/app/cache" value="-R @project.user@.@project.group@"/>
+  <var name="/data/broodjesplatform/app/logs" value="-R @project.user@.@project.group@"/>
+  <var name="/data/broodjesplatform/web/media" value="-R @project.user@.@project.group@"/>
+  <var name="/data/current/app/cache" value="-R @project.user@.@project.group@"/>
+  <var name="/data/current/app/logs" value="-R @project.user@.@project.group@"/>
+  <var name="/data/current/web/media" value="-R @project.user@.@project.group@"/>
+</config>

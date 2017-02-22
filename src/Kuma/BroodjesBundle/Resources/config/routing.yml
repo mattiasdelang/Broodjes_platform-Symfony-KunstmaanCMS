@@ -1,0 +1,77 @@
+kumabroodjesbundle_default:
+    resource: '@KumaBroodjesBundle/Controller/DefaultController.php'
+    type:     annotation
+    prefix:   /
+
+kumabroodjesbundle_dashboard:
+    resource: '@KumaBroodjesBundle/Controller/DashboardController.php'
+    type:     annotation
+    prefix: /{_locale}/admin/dashboard/widget/broodjes
+    requirements:
+         _locale: %requiredlocales%
+
+kumabroodjesbundle_product_admin_list:
+    resource: '@KumaBroodjesBundle/Controller/ProductAdminListController.php'
+    type:     annotation
+    prefix:   /{_locale}/admin/product/
+    requirements:
+         _locale: %requiredlocales%
+
+kumabroodjesbundle_slack:
+    resource: '@KumaBroodjesBundle/Controller/SlackController.php'
+    type:     annotation
+    prefix:   /slack/
+
+kumabroodjesbundle_payment:
+    resource: '@KumaBroodjesBundle/Controller/PaymentController.php'
+    type:     annotation
+    prefix:   /payment/
+
+kumabroodjesbundle_supplement_admin_list:
+    resource: '@KumaBroodjesBundle/Controller/SupplementAdminListController.php'
+    type:     annotation
+    prefix:   /{_locale}/admin/supplement/
+    requirements:
+         _locale: %requiredlocales%
+
+kumabroodjesbundle_endproduct_admin_list:
+    resource: '@KumaBroodjesBundle/Controller/EndProductAdminListController.php'
+    type:     annotation
+    prefix:   /{_locale}/admin/endproduct/
+    requirements:
+         _locale: %requiredlocales%
+
+kumabroodjesbundle_lunchorder_admin_list:
+    resource: '@KumaBroodjesBundle/Controller/LunchOrderAdminListController.php'
+    type:     annotation
+    prefix:   /{_locale}/admin/lunchorder/
+    requirements:
+         _locale: %requiredlocales%
+
+kumabroodjesbundle_category_admin_list:
+    resource: '@KumaBroodjesBundle/Controller/CategoryAdminListController.php'
+    type:     annotation
+    prefix:   /{_locale}/admin/category/
+    requirements:
+         _locale: %requiredlocales%
+
+kumabroodjesbundle_transaction_admin_list:
+    resource: '@KumaBroodjesBundle/Controller/TransactionAdminListController.php'
+    type:     annotation
+    prefix:   /{_locale}/admin/transaction/
+    requirements:
+         _locale: %requiredlocales%
+
+kumabroodjesbundle_dayitem_admin_list:
+    resource: '@KumaBroodjesBundle/Controller/DayItemAdminListController.php'
+    type:     annotation
+    prefix:   /{_locale}/admin/dayitem/
+    requirements:
+         _locale: %requiredlocales%
+
+kumabroodjesbundle_userinfo_admin_list:
+    resource: '@KumaBroodjesBundle/Controller/UserInfoAdminListController.php'
+    type:     annotation
+    prefix:   /{_locale}/admin/userinfo/
+    requirements:
+         _locale: %requiredlocales%

@@ -1,0 +1,32 @@
+<div>
+    <h3>Bestelling Kunstmaan: {{ today }}</h3>
+    <p>
+        Bestelling broodjes voor Kunstmaan - 016/30.07.80 - Philipssite 5 - bus 10 / B-3001 Leuven
+        <br>
+        <br>
+        Graag levering op kantoor
+    </p>
+    {% set totalprice = 0 %}
+    {% if orders is empty %}
+        Er zijn vandaag geen broodjes besteld!<br/>
+    {% endif %}
+    {% for order in orders %}
+        <hr/>
+        Naam: {{ order.user.username }}<br/>
+        Prijs bestelling: € {{ order.price }}
+        {% set totalprice = totalprice + order.price %}
+        <hr/><br/>
+        {% for endproduct in order.endProducts %}
+            Product: {{ endproduct.product.name }}<br/>
+            Met Supplementen:
+                {% for supplement in endproduct.supplements %}
+                    {{ supplement.name }}
+                {% endfor %}<br/>
+            Extra info: {{ endproduct.extraInfo }}<br/>
+            Prijs: € {{ endproduct.price }}<br/>
+            <br/>
+        {% endfor %}
+    {% endfor %}
+    <hr/><hr/>
+    Totale prijs bestelling: € {{ totalprice }}
+</div>

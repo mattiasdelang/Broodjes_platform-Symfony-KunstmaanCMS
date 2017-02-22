@@ -1,0 +1,139 @@
+parameters:
+    kumabroodjesbundle.dashboard.command: Kuma\BroodjesBundle\Command\DashboardCommand
+    kumabroodjesbundle.dashboard.controller: Kuma\BroodjesBundle\Controller\DashboardController
+
+services:
+        kumabroodjesbundle.admin.menu.adaptor:
+            class: Kuma\BroodjesBundle\Helper\Menu\ModulesMenuAdaptor
+            arguments: ['@security.authorization_checker']
+            tags:
+                - { name: kunstmaan_admin.menu.adaptor }
+
+        kumabroodjesbundle.menu.credit.adaptor:
+            class: Kuma\BroodjesBundle\Helper\Menu\UserCreditAdaptor
+            arguments: ['@doctrine.orm.entity_manager','@security.token_storage']
+            tags:
+                - { name: kunstmaan_admin.admin_panel.adaptor }
+
+        kumabroodjesbundle.create.userinfo:
+            class: Kuma\BroodjesBundle\Form\EventListener\CreateUserListener
+            arguments: ['@doctrine.orm.entity_manager','@kunstmaan_translator.service.translator.translator']
+            tags:
+                - { name: 'kernel.event_listener', event: 'security.interactive_login', method: 'onUserCreation' }
+
+        kumabroodjesbundle.create.productorder:
+            class: Kuma\BroodjesBundle\Form\EventListener\AddOrderProductListener
+            arguments: ['@doctrine.orm.entity_manager','@kunstmaan_translator.service.translator.translator','@security.token_storage','@router.default']
+            tags:
+                - { name: 'kernel.event_listener', event: 'kunstmaan_admin_list.postAdd', method: 'onAddOrderProduct' }
+                - { name: 'kernel.event_listener', event: 'kunstmaan_admin_list.preAdd', method: 'onCheckDuplicateEndProduct' }
+
+        kumabroodjesbundle.edit.lunchorder:
+            class: Kuma\BroodjesBundle\Form\EventListener\EditLunchOrderListener
+            arguments: ['@doctrine.orm.entity_manager','@kunstmaan_translator.service.translator.translator','@security.token_storage','@router.default', '@mailer']
+            tags:
+                - { name: 'kernel.event_listener', event: 'kunstmaan_admin_list.preEdit', method: 'onEditLunchOrder' }
+
+        kumabroodjesbundle.add.user:
+            class: Kuma\BroodjesBundle\Form\EventListener\AddUserListener
+            arguments: ['@security.token_storage']
+
+        kumabroodjesbundle.change.supplements:
+            class: Kuma\BroodjesBundle\Form\EventListener\ChangeSupplementsSubscriber
+            arguments: ['@doctrine.orm.entity_manager']
+            tags:
+                - { name: 'kernel.event_subscriber'}
+
+        kumabroodjesbundle.remove.endproduct:
+            class: Kuma\BroodjesBundle\Form\EventListener\RemoveEndProduct
+            arguments: ['@doctrine.orm.entity_manager','@security.token_storage','@kunstmaan_translator.service.translator.translator']
+            tags:
+                - { name: 'kernel.event_listener', event: 'kunstmaan_admin_list.preDelete', method: 'onRemoveEndProduct' }
+
+        gedmo.listener.softdeleteable:
+            class: Gedmo\SoftDeleteable\SoftDeleteableListener
+            tags:
+                - { name: doctrine.event_subscriber, connection: default }
+            calls:
+                - [ 'setAnnotationReader', [ '@annotation_reader' ] ]
+
+        kumabroodjesbundle.endproduct_voter:
+            class: Kuma\BroodjesBundle\Security\EndProductVoter
+            arguments: ['@security.access.decision_manager']
+            tags:
+                - { name: security.voter }
+            # small performance boost
+            public: false
+
+        kumabroodjesbundle.defaultorder_voter:
+            class: Kuma\BroodjesBundle\Security\DefaultOrderVoter
+            arguments: ['@security.access.decision_manager']
+            tags:
+                - { name: security.voter }
+            # small performance boost
+            public: false
+
+        kumabroodjesbundle.default_voter:
+            class: Kuma\BroodjesBundle\Security\DefaultVoter
+            arguments: ['@security.access.decision_manager']
+            tags:
+                - { name: security.voter }
+            # small performance boost
+            public: false
+
+        kumabroodjesbundle.toggle_voter:
+            class: Kuma\BroodjesBundle\Security\DefaultToggleVoter
+            arguments: ['@security.access.decision_manager']
+            tags:
+                - { name: security.voter }
+            # small performance boost
+            public: false
+
+        kumabroodjesbundle.favorite_voter:
+            class: Kuma\BroodjesBundle\Security\FavoriteVoter
+            arguments: ['@security.access.decision_manager']
+            tags:
+                - { name: security.voter }
+            # small performance boost
+            public: false
+
+        kumabroodjesbundle.lunchorder_voter:
+            class: Kuma\BroodjesBundle\Security\LunchOrderVoter
+            arguments: ['@security.access.decision_manager']
+            tags:
+                - { name: security.voter }
+            # small performance boost
+            public: false
+
+        kumabroodjesbundle.endproduct.formtype:
+            class: Kuma\BroodjesBundle\Form\EndProductAdminType
+            arguments: ['@doctrine.orm.entity_manager','@kumabroodjesbundle.add.user','@kumabroodjesbundle.change.supplements']
+            tags:
+                - { name: form.type, alias : 'kumabroodjesbundle_form_endproduct' }
+
+        kumabroodjesbundle.lunchorder.formtype:
+             class: Kuma\BroodjesBundle\Form\LunchOrderAdminType
+             arguments: ['@security.token_storage']
+             tags:
+                 - { name: form.type, alias : 'kumabroodjesbundle_form_lunchorder' }
+
+        kumabroodjesbundle.helper.service.mailer:
+            class: Kuma\BroodjesBundle\Helper\Mailer\MailerService
+            arguments: ['@doctrine.orm.default_entity_manager',"@mailer","@templating", "@kumabroodjesbundle.helper.service.webhook"]
+
+        kumabroodjesbundle.helper.service.webhook:
+            class: Kuma\BroodjesBundle\Helper\Slack\WebHookService
+            arguments: ['%slack.webhook.token%']
+
+        kumabroodjesbundle.helper.service.lowcredit:
+            class: Kuma\BroodjesBundle\Helper\Slack\LowCreditService
+            arguments: ['@doctrine.orm.entity_manager','@kumabroodjesbundle.helper.service.webhook','%slack.api.token%']
+
+        kumabroodjesbundle.widget.dashboard:
+            class: Kunstmaan\DashboardBundle\Widget\DashboardWidget
+            arguments:
+                - '%kumabroodjesbundle.dashboard.command%'
+                - '%kumabroodjesbundle.dashboard.controller%'
+                - '@service_container'
+            tags:
+                 - { name: kunstmaan_dashboard.widget, priority: 1 }

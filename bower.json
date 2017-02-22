@@ -1,0 +1,12 @@
+{
+    "name": "KumaBroodjesBundle",
+    "version": "1.0.0",
+    "dependencies": {
+    "html5shiv": "~3.7",
+    "bootstrap-sass-official": "~3.3",
+    "jquery": "~2.1",
+    "velocity": "~1.2",
+        "cargobay": "~0.8",
+    "picturefill": "~3.0.1"
+    }
+}

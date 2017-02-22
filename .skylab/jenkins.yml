@@ -1,0 +1,11 @@
+deploy_matrix:
+    staging:
+        server: nine.staging.kunstmaan.com
+        port: 22
+        branch: master
+        project: broodjesplatform
+        symfony_env: prod
+
+database_source: staging
+
+template: symfony

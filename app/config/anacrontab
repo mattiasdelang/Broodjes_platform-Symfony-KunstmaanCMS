@@ -1,0 +1,4 @@
+* * * * * /<path to>/app/console kuma:nodes:cron --env=prod  > /dev/null 2>&1
+0 * * * * /<path to>/app/console kuma:dashboard:collect --env=prod  > /dev/null 2>&1
+15 10 * * 1-5 /home/projects/broodjesplatform/data/broodjesplatform/bin/console broodjes:mail
+45 9 * * 1-5 /home/projects/broodjesplatform/data/broodjesplatform/bin/console lowcredit:message

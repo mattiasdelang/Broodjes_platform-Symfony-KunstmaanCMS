@@ -1,0 +1,7 @@
+<a href="{{ path('kuma_broodjes_toggle_default', {'userId': row.user.id}) }}" class="link--text table__actions__item">
+    {% if object %}
+        <i class="fa fa-play" aria-hidden="true"></i>
+    {% else %}
+        <i class="fa fa-pause" aria-hidden="true"></i>
+    {% endif %}
+</a>

@@ -1,0 +1,48 @@
+flashbag:
+    notice:
+        favorite:
+            add: Je hebt het %name% toegevoegd als favoriet!
+            remove: Je hebt het %name% verwijderd als favoriet!
+        default:
+            remove: Je hebt het %name% verwijderd als default!
+            toggle:
+                pause: Je hebt het automatisch bestellen gestopt!
+                play: Je hebt het automatisch bestellen gestart!
+        order:
+            add: Je hebt een nieuwe bestelling gemaakt en product %name% toegevoegd!
+            endproduct:
+                add: Je hebteen product, %name%, toegevoegd aan een bestaande bestelling!
+                remove:
+                    success: Je hebt het product, %name%, van de bestelling verwijderd!
+                    fail: Je kan dit product niet verwijderen van de bestelling!
+                soup: Je hebt de Dagsoep besteld!
+                sandwich: Je hebt de dagbroodje besteld!
+                exist: Dit product bestaat niet!
+            error:
+                multiple: Meerdere Orders, zelfde User, zelfde day, contacteer Ruud!
+                user: Dit is niet jouw product!
+            money: Je hebt te weinig credit om deze bestelling te kunnen betalen!
+            duplication: Je hebt dit product al in je order van vandaag!
+        endproduct:
+            error:
+                multiple: Dit product bestaat al.
+            remove: Je kan dit product niet verwijderen, dit wordt momenteel besteld!
+        credit:
+            increase: Je saldo is verhoogd met %amount% Euro.
+            slack:
+                wait: Je betaling is in verwerking, je krijgt een slack bericht met updates.
+        login:
+            slack:
+                success: je kan nu de slack commando's gebruiken, ze beginnen allemaal met /broodje_!
+        defaultday:
+            pause: Je hebt de automatische bestellingen gestopt op %day%.
+            play: Je hebt de automatische bestellingen gestart op %day%.
+    warning:
+        default:
+            add: Je hebt het %name% toegevoegd als default!
+    username:
+        change: Gelieve uw profielnaam aan te passen, deze bevat nog steeds een emailadres!
+'End Product': Product
+'SaveOrder': Save & Order
+order:
+    processed: bestelling is verwerkt!

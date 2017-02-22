@@ -1,0 +1,7 @@
+{% if object != true %}
+    <a href="{{ path('kumabroodjesbundle_admin_lunchorder_edit', {'id': row.id}) }}" class="link--text table__actions__item" title="Edit">
+        <i class="fa fa-pencil-square-o"></i>
+    </a>
+{% else %}
+    {{ 'order.processed'|trans }}
+{% endif %}

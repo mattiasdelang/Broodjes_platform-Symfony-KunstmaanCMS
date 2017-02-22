@@ -1,0 +1,101 @@
+<?xml version="1.0"?>
+<config>
+  <var name="/">
+    <item value="-R -m user::rwX"/>
+    <item value="-R -m group::r-X"/>
+    <item value="-R -m other::---"/>
+    <item value="-R -m u:@config.wwwuser@:r-X"/>
+    <item value="-R -m u:@project.user@:rwX"/>
+    <item value="-R -m u:@config.postgresuser@:r-X"/>
+    <item value="-R -m group:admin:rwX"/>
+  </var>
+  <var name="/.ssh">
+    <item value="-R -m user::rwX"/>
+    <item value="-R -m group::---"/>
+    <item value="-R -m other::---"/>
+    <item value="-R -m m::---"/>
+  </var>
+  <var name="/stats">
+    <item value="-R -m user::rwX"/>
+    <item value="-R -m group::r-X"/>
+    <item value="-R -m u:@config.wwwuser@:r-X"/>
+    <item value="-R -m group:admin:r-X"/>
+  </var>
+  <var name="/apachelogs">
+    <item value="-R -m user::rwX"/>
+    <item value="-R -m group::r-X"/>
+    <item value="-R -m other::---"/>
+    <item value="-R -m u:@config.wwwuser@:rwX"/>
+  </var>
+  <var name="/site">
+    <item value="-R -m user::rwX"/>
+    <item value="-R -m group::r-X"/>
+    <item value="-R -m other::---"/>
+    <item value="-R -m u:@config.wwwuser@:r-X"/>
+  </var>
+  <var name="/backup">
+    <item value="-R -m user::rwX"/>
+    <item value="-R -m group::r-X"/>
+    <item value="-R -m other::---"/>
+    <item value="-R -m u:@config.postgresuser@:rwX"/>
+  </var>
+  <var name="/data">
+    <item value="-R -m user::rwX"/>
+    <item value="-R -m group::r-X"/>
+    <item value="-R -m other::---"/>
+    <item value="-R -m u:@config.wwwuser@:r-X"/>
+  </var>
+  <var name="/conf">
+    <item value="-R -m user::rwX"/>
+    <item value="-R -m group::r-X"/>
+    <item value="-R -m other::---"/>
+  </var>
+  <var name="/php-fpm">
+    <item value="-R -m user::rwX"/>
+    <item value="-R -m group::r-X"/>
+    <item value="-R -m other::---"/>
+    <item value="-R -m u:@config.wwwuser@:r-X"/>
+  </var>
+  <var name="/tmp">
+    <item value="-R -m user::rwX"/>
+    <item value="-R -m group::r-X"/>
+    <item value="-R -m other::---"/>
+    <item value="-R -m u:@config.wwwuser@:r-X"/>
+  </var>
+  <var name="/data/broodjesplatform/app/cache">
+    <item value="-R -m user::rwX"/>
+    <item value="-R -m group::r-X"/>
+    <item value="-R -m other::---"/>
+    <item value="-R -m u:@config.wwwuser@:rwX"/>
+  </var>
+  <var name="/data/broodjesplatform/app/logs">
+    <item value="-R -m user::rwX"/>
+    <item value="-R -m group::r-X"/>
+    <item value="-R -m other::---"/>
+    <item value="-R -m u:@config.wwwuser@:rwX"/>
+  </var>
+  <var name="/data/broodjesplatform/web/media">
+    <item value="-R -m user::rwX"/>
+    <item value="-R -m group::r-X"/>
+    <item value="-R -m other::---"/>
+    <item value="-R -m u:@config.wwwuser@:rwX"/>
+  </var>
+  <var name="/data/current/app/cache">
+    <item value="-R -m user::rwX"/>
+    <item value="-R -m group::r-X"/>
+    <item value="-R -m other::---"/>
+    <item value="-R -m u:@config.wwwuser@:rwX"/>
+  </var>
+  <var name="/data/current/app/logs">
+    <item value="-R -m user::rwX"/>
+    <item value="-R -m group::r-X"/>
+    <item value="-R -m other::---"/>
+    <item value="-R -m u:@config.wwwuser@:rwX"/>
+  </var>
+  <var name="/data/current/web/media">
+    <item value="-R -m user::rwX"/>
+    <item value="-R -m group::r-X"/>
+    <item value="-R -m other::---"/>
+    <item value="-R -m u:@config.wwwuser@:rwX"/>
+  </var>
+</config>

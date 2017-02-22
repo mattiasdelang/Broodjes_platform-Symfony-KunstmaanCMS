@@ -1,0 +1,25 @@
+<?xml version="1.0"?>
+<config>
+  <var name="project.skeletons">
+    <item value="base"/>
+    <item value="anacron"/>
+    <item value="mysql"/>
+    <item value="monitoring"/>
+    <item value="apache"/>
+    <item value="php5"/>
+    <item value="symfony"/>
+  </var>
+  <var name="project.dir" value="/home/projects//broodjesplatform"/>
+  <var name="project.name" value="broodjesplatform"/>
+  <var name="project.user" value="broodjesplatform"/>
+  <var name="project.group" value="broodjesplatform"/>
+  <var name="project.admin" value="support@kunstmaan.be"/>
+  <var name="project.mysqluser" value="broodjesplatform"/>
+  <var name="project.mysqlpass" value="ieFeequ7"/>
+  <var name="project.mysqldbname" value="broodjesplatform"/>
+  <var name="project.mysqlserver" value="localhost"/>
+  <var name="project.url" value="broodjesplatform.be"/>
+  <var name="project.aliases">
+    <item value="www.broodjesplatform.be"/>
+  </var>
+</config>

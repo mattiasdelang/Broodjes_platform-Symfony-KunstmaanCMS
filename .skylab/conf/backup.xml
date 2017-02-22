@@ -1,0 +1,7 @@
+<?xml version="1.0"?>
+<config>
+  <var name="backup.excludes">
+    <item value="error.log"/>
+    <item value="access.log*"/>
+  </var>
+</config>

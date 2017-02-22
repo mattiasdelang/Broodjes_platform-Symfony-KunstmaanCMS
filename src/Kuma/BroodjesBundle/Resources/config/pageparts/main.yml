@@ -1,0 +1,16 @@
+name: Main
+context: main
+types:
+    - { name: Audio, class: Kuma\BroodjesBundle\Entity\PageParts\AudioPagePart }
+    - { name: Button, class: Kuma\BroodjesBundle\Entity\PageParts\ButtonPagePart }
+    - { name: Download, class: Kuma\BroodjesBundle\Entity\PageParts\DownloadPagePart }
+    - { name: Header, class: Kuma\BroodjesBundle\Entity\PageParts\HeaderPagePart }
+    - { name: Image, class: Kuma\BroodjesBundle\Entity\PageParts\ImagePagePart }
+    - { name: IntroText, class: Kuma\BroodjesBundle\Entity\PageParts\IntroTextPagePart }
+    - { name: Line, class: Kuma\BroodjesBundle\Entity\PageParts\LinePagePart }
+    - { name: Link, class: Kuma\BroodjesBundle\Entity\PageParts\LinkPagePart }
+    - { name: RawHtml, class: Kuma\BroodjesBundle\Entity\PageParts\RawHtmlPagePart }
+    - { name: Text, class: Kuma\BroodjesBundle\Entity\PageParts\TextPagePart }
+    - { name: Toc, class: Kuma\BroodjesBundle\Entity\PageParts\TocPagePart }
+    - { name: ToTop, class: Kuma\BroodjesBundle\Entity\PageParts\ToTopPagePart }
+    - { name: Video, class: Kuma\BroodjesBundle\Entity\PageParts\VideoPagePart }

@@ -1,0 +1,7 @@
+{% if object.owner.status %}
+    {{ object.owner.productnames }}
+{% else %}
+    {% for obj in object %}
+        {{ obj.name }},
+    {% endfor %}
+{% endif %}

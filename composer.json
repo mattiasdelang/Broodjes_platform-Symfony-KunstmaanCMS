@@ -1,0 +1,85 @@
+{
+    "name": "kunstmaan/bundles-standard-edition",
+    "license": "MIT",
+    "type": "project",
+    "description": "The \"Kunstmaan Bundles CMS Standard Edition\" distribution",
+    "autoload": {
+        "psr-4": { "": "src/" },
+        "classmap": [ "app/AppKernel.php", "app/AppCache.php" ]
+    },
+    "repositories": [
+        {
+            "type": "vcs",
+            "url": "https://github.com/sandergo90/spork.git"
+        }
+    ],
+    "require": {
+        "kunstmaan/bundles-cms": "dev-sf3",
+        "symfony-cmf/routing-bundle": "dev-master",
+        "symfony-cmf/routing": "~1.4",
+        "raven/raven": "~0.13.0",
+        "friendsofsymfony/http-cache-bundle": "~1.3.6",
+        "ekino/newrelic-bundle": "~1.3.2",
+        "doctrine/doctrine-migrations-bundle": "~1.1.1",
+        "friendsofsymfony/user-bundle": "2.0.*@dev",
+        "kriswallsmith/spork": "dev-eventdispatcher",
+        "beberlei/DoctrineExtensions": "^1.0",
+        "mollie/mollie-api-php": "1.8.*",
+        "phpro/grumphp": "^0.9.6",
+        "squizlabs/php_codesniffer": "^2.7"
+    },
+    "require-dev": {
+        "behat/behat": "dev-master",
+        "behat/symfony2-extension": "~2.1.1",
+        "behat/mink": "dev-master",
+        "behat/mink-browserkit-driver": "dev-master",
+        "behat/mink-selenium2-driver": "dev-master",
+        "behat/mink-goutte-driver": "dev-master",
+        "behat/mink-sahi-driver": "dev-master",
+        "symfony/phpunit-bridge": "~3.0",
+        "phpunit/phpunit": "~4.4",
+        "fzaninotto/faker": "~1.5",
+        "nelmio/alice": "^2.1.4",
+        "behat/mink-extension": "~2.0"
+    },
+    "scripts": {
+        "post-root-package-install": [
+            "SymfonyStandard\\Composer::hookRootPackageInstall"
+        ],
+        "post-install-cmd": [
+            "Incenteev\\ParameterHandler\\ScriptHandler::buildParameters",
+            "Sensio\\Bundle\\DistributionBundle\\Composer\\ScriptHandler::buildBootstrap",
+            "Sensio\\Bundle\\DistributionBundle\\Composer\\ScriptHandler::clearCache",
+            "Sensio\\Bundle\\DistributionBundle\\Composer\\ScriptHandler::installAssets",
+            "Sensio\\Bundle\\DistributionBundle\\Composer\\ScriptHandler::installRequirementsFile",
+            "Sensio\\Bundle\\DistributionBundle\\Composer\\ScriptHandler::prepareDeploymentTarget"
+        ],
+        "post-update-cmd": [
+            "Incenteev\\ParameterHandler\\ScriptHandler::buildParameters",
+            "Sensio\\Bundle\\DistributionBundle\\Composer\\ScriptHandler::buildBootstrap",
+            "Sensio\\Bundle\\DistributionBundle\\Composer\\ScriptHandler::clearCache",
+            "Sensio\\Bundle\\DistributionBundle\\Composer\\ScriptHandler::installAssets",
+            "Sensio\\Bundle\\DistributionBundle\\Composer\\ScriptHandler::installRequirementsFile",
+            "Sensio\\Bundle\\DistributionBundle\\Composer\\ScriptHandler::prepareDeploymentTarget"
+        ]
+    },
+    "config": {
+        "bin-dir": "bin",
+        "platform": {
+            "php": "5.5.9"
+        }
+    },
+    "extra": {
+        "symfony-app-dir": "app",
+        "symfony-web-dir": "web",
+        "symfony-var-dir": "var",
+        "symfony-bin-dir": "bin",
+        "symfony-assets-install": "relative",
+        "incenteev-parameters": {
+            "file": "app/config/parameters.yml"
+        },
+        "branch-alias": {
+            "dev-master": "4.0-dev"
+        }
+    }
+}
